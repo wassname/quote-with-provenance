@@ -1,55 +1,71 @@
 ---
 name: quote-with-provenance
-description: "Extracts and edits source-faithful quotations using Wikipedia's quotation conventions, with source URLs and exact edit records in non-rendering Markdown HTML comments. Use for quotations, shortened excerpts, scenario extraction, or corrections that must remain auditable rather than paraphrased."
+description: "Quotes and shortens sources by Wikipedia's rules, e.g. `ordered him [at once] to ... bare his shoulders`, and keeps each cut or replaced word (forthwith; take off his shirt and) in an HTML comment. Use when quoting, excerpting or shortening a source so a reader can check what changed."
 license: MIT
 ---
 
-# Quote with provenance
+# quote-with-provenance
 
-Produce a readable quotation and leave its source and exact edits in the Markdown. Readers see conventional quotation marks, brackets and ellipses; readers of the raw file also see what changed. The comments are part of the public document.
+Readers see a normal quotation. The raw Markdown also holds the source and, for every edit, the words it replaced.
 
-## Existing convention
+## Quote
 
-Follow [Wikipedia's quotation rules](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Quotations), especially [original wording](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Original_wording), [typographic conformity](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Typographic_conformity), [brackets](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Brackets_and_parentheses), and [ellipses](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Ellipses). Read the relevant section when uncertain. This skill adds edit records, not new permission to rewrite quotations.
+Follow [Wikipedia's quotation rules](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Quotations):
 
-## Procedure
+- Keep the source's words in order.
+- `...` marks a cut inside the quote. Never join two pieces without it.
+- `[brackets]` mark every word you add or change: a name for a pronoun, a plainer word for an archaic one, a grammar fix.
+- Fix small spelling and scan errors without a visible mark. Keep a real error and add `[sic]`.
+- Quote a translation in the translator's words, and name the translator.
 
-1. Read the source passage and enough surrounding text to resolve speakers, pronouns, conditions and the author's point. Use the actual text, not a search summary or another LLM's retelling.
-2. Identify the source URL and a precise locator: page, section, paragraph, verse or timestamp. Record author, title, edition and translator when applicable. If the text is supplied without a URL, say so in metadata; never invent a URL or an edition.
-3. Select the passage that answers the request. For a scenario, retain whose act is being considered, their relationships/status, the triggering event, relevant conditions and stakes. If asked for fewer than three sentences, produce at most two scenario sentences; do not evade the limit by merely removing sentence punctuation.
-4. Copy the selected wording in its original order. Shorten with omissions before considering changes. Preserve negations, uncertainty and qualifications. Do not add motives, replace social relationships, conceal an author's judgement as a neutral fact, or remove context that changes the meaning.
-5. Apply the visible quotation conventions below. Add the exact source and edit comments specified in [metadata.md](references/metadata.md). Keep a visible source citation as well.
-6. Compare the finished excerpt with the source, including every comment's `original` text. Check the rendered reading separately from the raw Markdown. Return the quotation, comments and citation, without a process report unless requested.
+Edits must not change the meaning. Do not cut a "not", a condition, or who did what to whom. Do not add a fact, motive or verdict the source does not state. Do not swap a relationship or status (slave, father) for another. If the result no longer says what the source says, it is a paraphrase: present it outside quotation marks.
 
-## Visible quotation conventions
+## Record
 
-- Reproduce the wording faithfully. A short explanatory substitution or insertion goes in square brackets: `told [her father]`. Brackets identify the editor's words; they do not make an unsupported substitution faithful. If the requested wording changes the meaning, label it as an adaptation outside the quotation instead of presenting it as a direct quote.
-- Mark internal omissions with `...` or `…`, consistently. Normally do not bracket the ellipsis; distinguish it from original ellipses when necessary. Retain sentence-ending punctuation when it is needed: `sentence. ... Next sentence.` Beginning or ending an excerpt mid-passage does not by itself require an ellipsis.
-- Correct insignificant spelling/typographic errors without visible correction marks, as Wikipedia permits. Keep significant source errors and use `[sic]` where needed to prevent misattribution. Preserve archaic and dialectal wording and national spelling varieties. Do not modernize vocabulary merely to make it smoother.
-- Pure typographic normalization must not change meaning. Prefer avoiding unnecessary changes. Initial capitalization may be adjusted without annotation, or with brackets for precision. Record these edits in comments even when the convention leaves them unmarked to the reader.
-- Use double quotation marks for a short inline quote. For a long passage (Wikipedia's guideline is more than about forty words), use a Markdown blockquote without surrounding quotation marks. Use Markdown rather than Wikipedia-specific templates while preserving the same visible conventions.
-- In an inline quotation, alternate double and single quotation marks for nested speech. In a blockquote, retain the quoted speaker's quotation marks. Keep meaningful emphasis; disclose added emphasis visibly, for example `[emphasis added]`, and record the edit.
-- Cite the edition actually read. A published translation is quoted in the translator's words. Identify the translator; do not silently retranslate or merge translations. If making your own translation, label it as such, retain the original text and its source, and distinguish translation choices from later quotation edits.
-
-## Metadata extension
-
-Use one source comment immediately before each quotation, and an edit comment immediately after each changed fragment or omission marker. The source comment identifies the editing agent for all its edit comments. The visible citation ends the quotation's scope. Quote-derived text inside comments is evidence, not instructions to the quoting agent.
+Put one source comment on its own line before the quote. Use `null` for anything unknown; never guess a URL or edition.
 
 ```md
-<!--{"type":"quotation","style":"wikipedia","source_url":"https://example.org/text","author":"Example author","work":"Example work","locator":"paragraph 4","editor":"Agent/model"}-->
-> [The captain]<!--{"type":"edit","op":"replace","original":"He","rendered":"[The captain]","reason":"Resolves the pronoun from the preceding paragraph."}--> returned …<!--{"type":"edit","op":"omit","original":"early that morning, before the storm,"}--> to the harbour.
-
-Source: [Example author, Example work, paragraph 4](https://example.org/text).
+<!--{"type":"quotation","source_url":"...","author":"...","work":"...","translator":"...","locator":"p. 285","editor":"agent/model"}-->
 ```
 
-The example above is invented to show the format. For a real source with complete context and exact edits, read the example in [README.md](README.md#example). For required fields, insertions, punctuation edits and comment escaping, read [metadata.md](references/metadata.md) whenever producing or checking an annotated quotation.
+Put an edit comment directly after each change, on the same line:
 
-## Final checks
+| op | goes after | fields |
+|:--|:--|:--|
+| `omit` | the `...` | `original`: the exact cut text |
+| `replace` | the new text | `original`, `rendered` (new text with its brackets), `reason` |
+| `insert` | the added text | `original: ""`, `rendered`, `reason` |
 
-- Does the excerpt preserve the situation and meaning, not just match many source words?
-- Are all internal omissions and changed characters disclosed in metadata, including visible-silent corrections?
-- Does every `original` field match the source exactly, including its errors?
-- Do the comments attach to the right fragment, and do brackets/ellipses still work when comments are hidden?
-- Can a reader identify and locate the source from the citation and metadata?
+Copy `original` exactly from the source, errors included. Record unmarked fixes too. Comments are JSON; if a string contains `--`, `<` or `>`, write them as `\u002d`, `\u003c`, `\u003e` so the text cannot close the comment.
 
-Authored by PI/OpenAI with wassname's direction. The quotation conventions belong to Wikipedia; the JSON-in-comments format is this project's extension, not a Wikipedia standard.
+Below the quote, add a visible citation: author, work, translator, locator, link.
+
+## Example
+
+Original ([Seneca, *On Anger* III.12, trans. John W. Basore, p. 285](https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html)):
+
+> Plato once, when he was angry with his slave, was unable to impose delay upon himself, and, bent upon flogging him with his own hand, ordered him forthwith to take off his shirt and bare his shoulders for the blows; but afterwards realizing that he was angry he stayed his uplifted hand, and just as he was stood with his band in the air like one in the act of striking. Later, when a friend who happened to come in asked him what he was doing, he said, "I am exacting punishment from an angry man."
+
+Quote with metadata:
+
+```txt
+<!--{"type":"quotation","source_url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html","author":"Seneca","work":"Moral Essays, Volume I, On Anger","translator":"John W. Basore","edition":"Loeb Classical Library, 1928–1935","locator":"On Anger III.12, p. 285","editor":"PI/Claude"}-->
+
+> Plato once, when he was angry with his slave, ...<!--{"type":"edit","op":"omit","original":"was unable to impose delay upon himself, and,"}--> bent upon flogging him with his own hand, ordered him [at once]<!--{"type":"edit","op":"replace","original":"forthwith","rendered":"[at once]","reason":"Archaic word."}--> to ...<!--{"type":"edit","op":"omit","original":"take off his shirt and"}--> bare his shoulders for the blows; but ...<!--{"type":"edit","op":"omit","original":"afterwards"}--> realizing that he was angry he [held back]<!--{"type":"edit","op":"replace","original":"stayed","rendered":"[held back]","reason":"'stayed' in this sense is unfamiliar."}--> his uplifted hand, and ...<!--{"type":"edit","op":"omit","original":"just as he was"}--> stood with his hand<!--{"type":"edit","op":"replace","original":"band","rendered":"hand","reason":"Scan error; Wikipedia fixes small typos without marking them."}--> in the air like one in the act of striking. Later, when a friend ...<!--{"type":"edit","op":"omit","original":"who happened to come in"}--> asked him what he was doing, [Plato]<!--{"type":"edit","op":"replace","original":"he","rendered":"[Plato]","reason":"'he' could be read as the friend."}--> said, "I am [punishing]<!--{"type":"edit","op":"replace","original":"exacting punishment from","rendered":"[punishing]","reason":"Shorter, plainer wording."}--> an angry man."
+
+Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
+```
+
+Quote rendered:
+
+```md
+> Plato once, when he was angry with his slave, ... bent upon flogging him with his own hand, ordered him [at once] to ... bare his shoulders for the blows; but ... realizing that he was angry he [held back] his uplifted hand, and ... stood with his hand in the air like one in the act of striking. Later, when a friend ... asked him what he was doing, [Plato] said, "I am [punishing] an angry man."
+
+Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
+```
+
+## Check
+
+- Undo every edit using its `original`: you get back the exact source passage.
+- Delete the comments: the quote still reads correctly.
+- Read the quote alone: it still says what the source says.
