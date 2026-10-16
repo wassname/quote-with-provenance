@@ -35,6 +35,7 @@ Put one JSON comment before the quote, with a blank line between them:
 - `original`: the passage copied exactly, errors included. The quoted span plus enough around it to show context, not the whole page.
 - `fixed`: typos corrected without a visible mark, as `{"source spelling": "fixed spelling"}`. Leave it out if there are none.
 - `uri`: where to find the original, e.g. `https://...`, `file:///path/book.pdf`, `doi:10.1000/xyz`, `urn:isbn:9780674992566`, `magnet:?xt=...`. Leave it out if there is none (an email, a conversation).
+- `bibtex`: optional, for papers and books. One JSON string, `\n` for newlines; page ranges like `285--287` need the escape below.
 - If a string contains `--`, `<` or `>`, write them as `\u002d`, `\u003c`, `\u003e` so the text cannot close the comment.
 
 Below the quote, add a visible citation in whatever form suits the source: author, work, translator, page; site and date; sender and date.
