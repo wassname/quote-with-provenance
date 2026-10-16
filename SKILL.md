@@ -26,7 +26,7 @@ Put one JSON comment before the quote, with a blank line between them:
 
 ```md
 <!--
-{"url":"https://...",
+{"source":"https://...",
 "original":"the exact passage",
 "fixed":{"band":"hand"}}
 -->
@@ -34,7 +34,7 @@ Put one JSON comment before the quote, with a blank line between them:
 
 - `original`: the passage copied exactly, errors included. The quoted span plus enough around it to show context, not the whole page.
 - `fixed`: typos corrected without a visible mark, as `{"source spelling": "fixed spelling"}`. Leave it out if there are none.
-- `url`: leave it out if the source has none (an email, a printed book).
+- `source`: where to find the original: a URL, file path, DOI or magnet link. Leave it out if there is none (an email, a printed book).
 - If a string contains `--`, `<` or `>`, write them as `\u002d`, `\u003c`, `\u003e` so the text cannot close the comment.
 
 Below the quote, add a visible citation in whatever form suits the source: author, work, translator, page; site and date; sender and date.
@@ -49,7 +49,7 @@ Quote with metadata:
 
 ```md
 <!--
-{"url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html",
+{"source":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html",
 "original":"Plato once, when he was angry with his slave, was unable to impose delay upon himself, and, bent upon flogging him with his own hand, ordered him forthwith to take off his shirt and bare his shoulders for the blows; but afterwards realizing that he was angry he stayed his uplifted hand, and just as he was stood with his band in the air like one in the act of striking. Later, when a friend who happened to come in asked him what he was doing, he said, \"I am exacting punishment from an angry man.\"",
 "fixed":{"band":"hand"}}
 -->
