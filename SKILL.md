@@ -42,7 +42,7 @@ Use one source comment immediately before each quotation, and an edit comment im
 Source: [Example author, Example work, paragraph 4](https://example.org/text).
 ```
 
-The example above is invented to show the format. For a real source with complete context and exact edits, read [the Seneca example](examples/seneca.md). For required fields, insertions, punctuation edits and comment escaping, read [metadata.md](references/metadata.md) whenever producing or checking an annotated quotation.
+The example above is invented to show the format. For a real source with complete context and exact edits, read the example in [README.md](README.md#example). For required fields, insertions, punctuation edits and comment escaping, read [metadata.md](references/metadata.md) whenever producing or checking an annotated quotation.
 
 ## Final checks
 

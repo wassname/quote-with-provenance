@@ -1,40 +1,37 @@
-# Quote with provenance
+# quote-with-provenance
 
-An LLM skill for source-faithful quotations in Markdown. It follows [Wikipedia's quotation conventions](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Quotations) and adds source details and exact edit records in HTML comments.
+An agent skill for quoting sources faithfully in Markdown. Quotes follow [Wikipedia's quotation rules](https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Quotations): `...` for cuts, `[brackets]` for the editor's words, small typos fixed. Each edit also gets an HTML comment holding the source's exact words, so the raw file shows what changed and the rendered page does not.
 
-The rendered text uses ordinary quotation marks, square brackets and ellipses. The raw Markdown also records the source URL, edition, locator, editor, and the original words behind each edit. Comments are deliberately public but do not appear in the rendered reading.
+## Example
 
-For example, the raw Markdown can contain:
+Original ([Seneca, *On Anger* III.12, trans. John W. Basore, p. 285](https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html)):
+
+> Plato once, when he was angry with his slave, was unable to impose delay upon himself, and, bent upon flogging him with his own hand, ordered him forthwith to take off his shirt and bare his shoulders for the blows; but afterwards realizing that he was angry he stayed his uplifted hand, and just as he was stood with his band in the air like one in the act of striking. Later, when a friend who happened to come in asked him what he was doing, he said, "I am exacting punishment from an angry man."
+
+Quote with metadata:
+
+```txt
+<!--{"type":"quotation","style":"wikipedia","source_url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html","author":"Seneca","work":"Moral Essays, Volume I, On Anger","translator":"John W. Basore","edition":"Loeb Classical Library, 1928–1935","locator":"On Anger III.12, p. 285","editor":"PI/Claude"}-->
+
+> Plato once, when he was angry with his slave, ...<!--{"type":"edit","op":"omit","original":"was unable to impose delay upon himself, and,"}--> bent upon flogging him with his own hand, ordered him [at once]<!--{"type":"edit","op":"replace","original":"forthwith","rendered":"[at once]","reason":"Archaic word."}--> to ...<!--{"type":"edit","op":"omit","original":"take off his shirt and"}--> bare his shoulders for the blows; but ...<!--{"type":"edit","op":"omit","original":"afterwards"}--> realizing that he was angry he [held back]<!--{"type":"edit","op":"replace","original":"stayed","rendered":"[held back]","reason":"'stayed' in this sense is unfamiliar."}--> his uplifted hand, and ...<!--{"type":"edit","op":"omit","original":"just as he was"}--> stood with his hand<!--{"type":"edit","op":"replace","original":"band","rendered":"hand","reason":"Scan error; Wikipedia fixes small typos without marking them."}--> in the air like one in the act of striking. Later, when a friend ...<!--{"type":"edit","op":"omit","original":"who happened to come in"}--> asked him what he was doing, [Plato]<!--{"type":"edit","op":"replace","original":"he","rendered":"[Plato]","reason":"'he' could be read as the friend."}--> said, "I am [punishing]<!--{"type":"edit","op":"replace","original":"exacting punishment from","rendered":"[punishing]","reason":"Shorter, plainer wording."}--> an angry man."
+
+Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
+```
+
+Quote rendered:
 
 ```md
-[her father]<!--{"type":"edit","op":"replace","original":"him","rendered":"[her father]","reason":"The preceding source sentence identifies him."}-->
+> Plato once, when he was angry with his slave, ... bent upon flogging him with his own hand, ordered him [at once] to ... bare his shoulders for the blows; but ... realizing that he was angry he [held back] his uplifted hand, and ... stood with his hand in the air like one in the act of striking. Later, when a friend ... asked him what he was doing, [Plato] said, "I am [punishing] an angry man."
+
+Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
 ```
 
-The reader sees `[her father]`; an auditor can also see that it replaced `him` and why. The [complete Seneca example](examples/seneca.md) shows source attribution, internal omissions and a two-sentence scenario extraction.
+The reader sees cuts and bracketed substitutions. The comments keep every removed or replaced word, including the scan error `band` → `hand`, which Wikipedia allows fixing without a visible mark.
 
-## Use
-
-Read [SKILL.md](SKILL.md), or install this directory as an [Agent Skill](https://agentskills.io/specification). It needs no API, package installation or executable code. The [metadata format](references/metadata.md) specifies the comments.
-
-To track it in an existing private skills repository:
+## Install
 
 ```sh
-git -C /path/to/private-skills-repo submodule add \
-  https://github.com/wassname/quote-with-provenance.git skills/quote-with-provenance
+git submodule add https://github.com/wassname/quote-with-provenance.git skills/quote-with-provenance
 ```
 
-Keep the comments when edit history is needed. A rendered-only copy can remove them and retain a conventional quotation.
-
-## Basis and scope
-
-This is a complete procedure for selecting, editing, attributing and checking a quotation, including short scenario extraction. It adds metadata to Wikipedia's visible conventions; it is not a new quotation standard endorsed by Wikipedia. The linked style guide remains the reference for quotation rules. This skill does not require quoting a source more extensively than the task needs.
-
-Wikipedia provides a detailed, publicly accessible rule set. The metadata format is specified here rather than left to a model's interpretation of the style guide. Exact edit records help an auditor check a quotation; they do not prove that its selection or wording preserves the source's meaning.
-
-Related projects solve different problems: [Verbatim](https://github.com/KRLabsOrg/verbatim-skill) offers API-based cited extraction; [citation-check-skill](https://github.com/serenakeyitan/citation-check-skill) audits claims; [markdown-provenance](https://github.com/rickmanelius/markdown-provenance) records file authenticity. No code or skill text from those projects is bundled here.
-
-## License and authorship
-
-MIT for this project's instructions and examples' editorial material. Quoted source passages retain their original attribution and rights.
-
-Created with wassname's direction; written by PI/OpenAI. Wikipedia supplies the quotation conventions, not the JSON-in-comments extension.
+Or copy [SKILL.md](SKILL.md) and [references/metadata.md](references/metadata.md). MIT license.
