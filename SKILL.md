@@ -22,19 +22,22 @@ Edits must not change the meaning. Do not cut a "not", a condition, or who did w
 
 ## Record
 
-Put one JSON comment on its own line before the quote:
+Put one JSON comment before the quote, with a blank line between them:
 
 ```md
-<!--{"source_url":"...","author":"...","work":"...","translator":"...","locator":"p. 285","editor":"agent/model","original":"...","fixed":{"band":"hand"}}-->
+<!--
+{"url":"https://...",
+"original":"the exact passage",
+"fixed":{"band":"hand"}}
+-->
 ```
 
 - `original`: the passage copied exactly, errors included. The quoted span plus enough around it to show context, not the whole page.
 - `fixed`: typos corrected without a visible mark, as `{"source spelling": "fixed spelling"}`. Leave it out if there are none.
-- `notes`: optional, for an edit whose reason is not obvious from the comparison.
-- Use `null` for anything unknown; never guess a URL or edition.
+- `url`: leave it out if the source has none (an email, a printed book).
 - If a string contains `--`, `<` or `>`, write them as `\u002d`, `\u003c`, `\u003e` so the text cannot close the comment.
 
-Below the quote, add a visible citation: author, work, translator, locator, link.
+Below the quote, add a visible citation in whatever form suits the source: author, work, translator, page; site and date; sender and date.
 
 ## Example
 
@@ -45,7 +48,11 @@ Original ([Seneca, *On Anger* III.12, trans. John W. Basore, p. 285](https://ext
 Quote with metadata:
 
 ```md
-<!--{"source_url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html","author":"Seneca","work":"Moral Essays, Volume I, On Anger","translator":"John W. Basore","edition":"Loeb Classical Library, 1928–1935","locator":"On Anger III.12, p. 285","editor":"PI/Claude","original":"Plato once, when he was angry with his slave, was unable to impose delay upon himself, and, bent upon flogging him with his own hand, ordered him forthwith to take off his shirt and bare his shoulders for the blows; but afterwards realizing that he was angry he stayed his uplifted hand, and just as he was stood with his band in the air like one in the act of striking. Later, when a friend who happened to come in asked him what he was doing, he said, \"I am exacting punishment from an angry man.\"","fixed":{"band":"hand"}}-->
+<!--
+{"url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html",
+"original":"Plato once, when he was angry with his slave, was unable to impose delay upon himself, and, bent upon flogging him with his own hand, ordered him forthwith to take off his shirt and bare his shoulders for the blows; but afterwards realizing that he was angry he stayed his uplifted hand, and just as he was stood with his band in the air like one in the act of striking. Later, when a friend who happened to come in asked him what he was doing, he said, \"I am exacting punishment from an angry man.\"",
+"fixed":{"band":"hand"}}
+-->
 
 > Plato once, when he was angry with his slave, ... bent upon flogging him with his own hand, ordered him [at once] to ... bare his shoulders for the blows;
 > but ... realizing that he was angry he [held back] his uplifted hand, and ... stood with his hand in the air like one in the act of striking.
