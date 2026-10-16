@@ -28,7 +28,7 @@ Put one source comment on its own line before the quote. Use `null` for anything
 <!--{"type":"quotation","source_url":"...","author":"...","work":"...","translator":"...","locator":"p. 285","editor":"agent/model"}-->
 ```
 
-Put an edit comment directly after each change, on the same line:
+Put an edit comment directly after each change, at the end of a text line. A line that starts with `<!--` ends the paragraph and splits the quote.
 
 | op | goes after | fields |
 |:--|:--|:--|
@@ -48,21 +48,33 @@ Original ([Seneca, *On Anger* III.12, trans. John W. Basore, p. 285](https://ext
 
 Quote with metadata:
 
-```txt
+```md
 <!--{"type":"quotation","source_url":"https://extra.shu.ac.uk/emls/iemls/stoics/seneca_essays_book_1.html","author":"Seneca","work":"Moral Essays, Volume I, On Anger","translator":"John W. Basore","edition":"Loeb Classical Library, 1928–1935","locator":"On Anger III.12, p. 285","editor":"PI/Claude"}-->
 
-> Plato once, when he was angry with his slave, ...<!--{"type":"edit","op":"omit","original":"was unable to impose delay upon himself, and,"}--> bent upon flogging him with his own hand, ordered him [at once]<!--{"type":"edit","op":"replace","original":"forthwith","rendered":"[at once]","reason":"Archaic word."}--> to ...<!--{"type":"edit","op":"omit","original":"take off his shirt and"}--> bare his shoulders for the blows; but ...<!--{"type":"edit","op":"omit","original":"afterwards"}--> realizing that he was angry he [held back]<!--{"type":"edit","op":"replace","original":"stayed","rendered":"[held back]","reason":"'stayed' in this sense is unfamiliar."}--> his uplifted hand, and ...<!--{"type":"edit","op":"omit","original":"just as he was"}--> stood with his hand<!--{"type":"edit","op":"replace","original":"band","rendered":"hand","reason":"Scan error; Wikipedia fixes small typos without marking them."}--> in the air like one in the act of striking. Later, when a friend ...<!--{"type":"edit","op":"omit","original":"who happened to come in"}--> asked him what he was doing, [Plato]<!--{"type":"edit","op":"replace","original":"he","rendered":"[Plato]","reason":"'he' could be read as the friend."}--> said, "I am [punishing]<!--{"type":"edit","op":"replace","original":"exacting punishment from","rendered":"[punishing]","reason":"Shorter, plainer wording."}--> an angry man."
+> Plato once, when he was angry with his slave, ...<!--{"type":"edit","op":"omit","original":"was unable to impose delay upon himself, and,"}-->
+> bent upon flogging him with his own hand, ordered him [at once]<!--{"type":"edit","op":"replace","original":"forthwith","rendered":"[at once]","reason":"Archaic word."}-->
+> to ...<!--{"type":"edit","op":"omit","original":"take off his shirt and"}-->
+> bare his shoulders for the blows;
+> but ...<!--{"type":"edit","op":"omit","original":"afterwards"}-->
+> realizing that he was angry he [held back]<!--{"type":"edit","op":"replace","original":"stayed","rendered":"[held back]","reason":"'stayed' in this sense is unfamiliar."}-->
+> his uplifted hand, and ...<!--{"type":"edit","op":"omit","original":"just as he was"}-->
+> stood with his hand<!--{"type":"edit","op":"replace","original":"band","rendered":"hand","reason":"Scan error; Wikipedia fixes small typos without marking them."}-->
+> in the air like one in the act of striking.
+> Later, when a friend ...<!--{"type":"edit","op":"omit","original":"who happened to come in"}-->
+> asked him what he was doing, [Plato]<!--{"type":"edit","op":"replace","original":"he","rendered":"[Plato]","reason":"'he' could be read as the friend."}-->
+> said, "I am [punishing]<!--{"type":"edit","op":"replace","original":"exacting punishment from","rendered":"[punishing]","reason":"Shorter, plainer wording."}-->
+> an angry man."
 
 Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
 ```
 
 Quote rendered:
 
-```md
-> Plato once, when he was angry with his slave, ... bent upon flogging him with his own hand, ordered him [at once] to ... bare his shoulders for the blows; but ... realizing that he was angry he [held back] his uplifted hand, and ... stood with his hand in the air like one in the act of striking. Later, when a friend ... asked him what he was doing, [Plato] said, "I am [punishing] an angry man."
+> Plato once, when he was angry with his slave, ... bent upon flogging him with his own hand, ordered him [at once] to ... bare his shoulders for the blows;
+> but ... realizing that he was angry he [held back] his uplifted hand, and ... stood with his hand in the air like one in the act of striking.
+> Later, when a friend ... asked him what he was doing, [Plato] said, "I am [punishing] an angry man."
 
 Seneca, *On Anger* III.12, trans. John W. Basore, p. 285.
-```
 
 ## Check
 
