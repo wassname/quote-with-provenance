@@ -135,7 +135,7 @@ def original_in_file(original, uri):
 
 def blocks(markdown):
     """(record, quote) pairs: a <!-- {json} --> comment, then the > lines after it."""
-    for m in re.finditer(r'<!--\s*(\{.*?\})\s*-->\s*\n((?:\s*\n)*)((?:>[^\n]*\n?)+)', markdown, re.S):
+    for m in re.finditer(r'<!--\s*(\{(?:(?!-->).)*?\})\s*-->\s*\n((?:\s*\n)*)((?:>[^\n]*\n?)+)', markdown, re.S):
         quote = ' '.join(re.sub(r'^>\s?', '', l) for l in m.group(3).splitlines())
         yield json.loads(m.group(1)), quote.strip()
 
